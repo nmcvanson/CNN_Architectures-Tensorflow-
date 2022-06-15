@@ -31,7 +31,7 @@ def traffic_sign_dataset():
     data = np.array(data) 
     labels = np.array(labels)
     print(data.shape, labels.shape)
-    # os.mkdir('Training')
+    os.mkdir('Training')
     np.save('./Training/data', data)
     np.save('./Training/target', labels)
     return data, labels
