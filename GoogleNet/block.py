@@ -24,8 +24,8 @@ def conv_block(input_tensor, filters, kernel_size, stride, padding):
     X: output tensor (n_H, n_W, channels) (channels - number of new channels)
     """
     X = Conv2D(filters = filters, kernel_size = kernel_size, strides = (stride, stride), padding = padding)(input_tensor)
-    #X = BatchNormalization()(X)
-    #X = Activation("relu")(X)
+    X = BatchNormalization()(X)
+    X = Activation("relu")(X)
     return X
 
 def inception_block(input_tensor, filters_1x1, filters_pre3x3, filters_3x3, filters_pre5x5, filters_5x5, filters_after_maxpool):
@@ -71,7 +71,7 @@ def auxiliary_block(input_tensor, classes):
     X: output of the identity block, tensor of shape (n_H, n_W, filters)
     """
     X = AveragePooling2D(pool_size = (5,5), strides = (3,3), padding = 'valid')(input_tensor)
-    X = conv_block(X, filters = 128, kernel_size = 1, stride = 1, padding = 'same')
+    X = conv_block(X, filters = 128, kernel_size = 1, stride = 1, padding = 'same', activation = 'relu')
     X = Flatten()(X)
     X = Dense(units = 1024)(X)
     X = Dropout(0.7)(X)
